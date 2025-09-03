@@ -1,6 +1,6 @@
 import { SPEED, JUMP_FORCE } from "./config.js";
 
-export function createPlayer(initialPos = vec2(100,100)) {
+export function createPlayer(initialPos = vec2(100,-100)) {
     const player = add([
         sprite("player", { width: 60, height: 62 }),
         pos(initialPos),
