@@ -1,0 +1,18 @@
+[
+  {
+    "nombre": "julian",
+    "puntuacion": 5
+  },
+  {
+    "nombre": "alejandro",
+    "puntuacion": 1
+  },
+  {
+    "nombre": "david",
+    "puntuacion": 1
+  },
+  {
+    "nombre": "Jugador",
+    "puntuacion": 0
+  }
+]

@@ -11,18 +11,6 @@ loadSprite("player", "sprites/player.png");
 loadSprite("coin", "sprites/coin.png");
 loadSprite("bg", "sprites/background.png");
 
-// Guardar y cargar puntajes en localStorage
-function saveHighScore(score) {
-    let scores = JSON.parse(localStorage.getItem("highscores") || "[]");
-    scores.push(score);
-    scores.sort((a, b) => b - a); // ordenar desc
-    scores = scores.slice(0, 5);  // top 5
-    localStorage.setItem("highscores", JSON.stringify(scores));
-    return scores;
-}
-
-
-
 // Escena del juego principal
 scene("game", ({ levelId = 0, coins = 0 } = {}) => {
     add([
@@ -53,27 +41,50 @@ scene("game", ({ levelId = 0, coins = 0 } = {}) => {
         coinsLabel.update(coins);
     });
 
-    // Colisión con trampas
-    player.onCollide("danger", () => {
+    // Colisión con trampas (GAME OVER)
+    player.onCollide("danger", async () => {
         destroy(player);
 
+        // Texto principal centrado
         add([
             text("GAME OVER", 48),
-            pos(width() / 2, height() / 2 - 80),
+            pos(width() / 2, height() / 2 - 120),
             anchor("center"),
         ]);
 
-        const scores = saveHighScore(coins);
+        // Pedir nombre del jugador
+        const nombre = prompt("Ingresa tu nombre:") || "Jugador";
 
+        let scores = [];
+        try {
+            // Enviar puntaje al backend
+            await fetch("http://localhost:3000/scores", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ nombre, puntuacion: coins }),
+            });
+
+            // Leer ranking del backend
+            const res = await fetch("http://localhost:3000/scores");
+            scores = await res.json();
+        } catch (err) {
+            console.warn("No se pudo conectar al servidor de puntajes:", err);
+            scores = [{ nombre, puntuacion: coins }];
+        }
+
+        // Mostrar ranking (centrado debajo del título)
         add([
-            text("\n\n\nMejores puntajes:\n" + scores.join("\n"), 24),
+            text("Mejores puntajes:\n" +
+                scores.map(s => `${s.nombre}: ${s.puntuacion}`).join("\n"),
+                24),
             pos(width() / 2, height() / 2),
             anchor("center"),
         ]);
 
+        // Botón reintentar (debajo del ranking)
         const retry = add([
-            text("\n\n\nReintentar (R)", 32),
-            pos(width() / 2, height() / 2 + 120),
+            text("Reintentar (R)", 32),
+            pos(width() / 2, height() / 2 + 140),
             anchor("center"),
             area(),
         ]);
@@ -87,7 +98,7 @@ scene("game", ({ levelId = 0, coins = 0 } = {}) => {
         });
     });
 
-    // Colisión con meta
+    // Colisión con meta (nivel completado)
     player.onCollide("goal", () => {
         if (levelId + 1 < LEVELS.length) {
             go("game", { levelId: levelId + 1, coins });
@@ -102,14 +113,6 @@ scene("win", ({ coins }) => {
     add([
         text(`¡Ganaste!\nMonedas: ${coins}`, 48),
         pos(width() / 2, height() / 2 - 100),
-        anchor("center"),
-    ]);
-
-    const scores = saveHighScore(coins);
-
-    add([
-        text("Mejores puntajes:\n" + scores.join("\n"), 28),
-        pos(width() / 2, height() / 2 + 40),
         anchor("center"),
     ]);
 
