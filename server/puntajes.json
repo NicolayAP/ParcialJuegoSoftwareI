@@ -1,18 +1,26 @@
 [
   {
-    "nombre": "killl",
-    "puntuacion": 6
+    "nombre": "Wlater",
+    "puntuacion": 7
   },
   {
     "nombre": "julian",
     "puntuacion": 5
   },
   {
-    "nombre": "juan",
-    "puntuacion": 2
+    "nombre": "Mikael",
+    "puntuacion": 5
   },
   {
-    "nombre": "liiol",
+    "nombre": "loco",
+    "puntuacion": 4
+  },
+  {
+    "nombre": "Nose",
+    "puntuacion": 3
+  },
+  {
+    "nombre": "juan",
     "puntuacion": 2
   },
   {
@@ -29,14 +37,6 @@
   },
   {
     "nombre": "juan",
-    "puntuacion": 1
-  },
-  {
-    "nombre": "juan",
-    "puntuacion": 1
-  },
-  {
-    "nombre": "assal",
     "puntuacion": 1
   }
 ]

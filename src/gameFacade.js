@@ -1,6 +1,7 @@
 import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
-import { GAME_CONFIG, GRAVITY } from "./config.js";
-import { LEVELS, LEVEL_CONF } from "./assets.js";
+import { GAME_CONFIG } from "./config/gameConfig.js";
+import { GRAVITY, LEVELS } from "./config/constants.js";
+import { ScoreService } from "./interfaces/ScoreService.js";
 import { createPlayer } from "./player.js";
 import { createCoinsLabel } from "./ui.js";
 
