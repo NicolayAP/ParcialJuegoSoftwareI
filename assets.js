@@ -57,8 +57,6 @@ export const LEVEL_CONF = {
             color(0, 0, 1),  // azul
             area(),
             "goal",
-        ]
-
+        ],
     }
 };
-

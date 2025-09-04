@@ -1,9 +1,12 @@
 import express from "express";
 import fs from "fs";
 import path from "path";
+import cors from "cors";
 
 const app = express();
 const PORT = 3000;
+
+app.use(cors());
 
 app.use(express.json());
 app.use(express.static(".")); // sirve los archivos del juego (index.html, main.js, etc.)
